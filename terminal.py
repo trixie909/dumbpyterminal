@@ -3,16 +3,22 @@ import sys
 import datetime as dt
 import subprocess
 import math as mth
+import threading
+from playsound import playsound
+def play_song(sound):
+    thread = threading.Thread(target=playsound, args=(sound,))
+    thread.start()
+
 while True:
     userinput = input("enter a command --> ")
 
     if userinput == "help":
-        print("commands: createfile, writefile, deletefile, breakwrite, exit, whichos, time, addition, subtraction, multiply, divide, pythagoreas, exponent, squareroot")
+        print("commands: createfile, writefile, deletefile, breakwrite, exit, whichos, time, playsound, addition, subtraction, multiply, divide, pythagoreas, exponent, squareroot")
     elif userinput == "createfile":
         filename = input("enter filename (include extension): ")
         f = open(filename, "a")
     elif userinput == "writefile":
-      content = input("enter text to write: ") 
+      content = input("enter text to write: ")
       while content != "exit":
         try:    
             f.write(content + "\n")
@@ -44,7 +50,7 @@ while True:
         try:    
             deletefilename = input("enter file name (include extension): ")
             os.remove(deletefilename)
-            print("file be gone")
+            print("file be gone") 
         except:
             print("file does not exist/deletion error")
     elif userinput == "addition":
@@ -102,6 +108,12 @@ while True:
             print(float(root))
         except:
             print("enter a number/positive number")
+    elif userinput == "playsound":
+        try:
+            sound = input("enter file path: ")
+            play_song(sound)
+        except:
+            print("enter a valid path to an mp3 or wav file")
 
     else:
         print(userinput + " isn't a command")
